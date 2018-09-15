@@ -1,0 +1,24 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let repo"> {{repo.name}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef> Nombre Completo </th>
+      <td mat-cell *matCellDef="let repo"> {{repo.full_name}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Descripción </th>
+      <td mat-cell *matCellDef="let repo"> {{repo.description}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="createdOn">
+      <th mat-header-cell *matHeaderCellDef> Creado </th>
+      <td mat-cell *matCellDef="let repo"> {{repo.created_at.replace('T', ' ').replace('Z', '')}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="selectedColumns"></tr>
+    <tr mat-row class="mat-row" *matRowDef="let myRowData; columns: selectedColumns" (click)="goto(myRowData)"></tr>
+  </table>

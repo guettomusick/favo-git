@@ -1,0 +1,40 @@
+.detail-card {
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.detail-header-image {
+  background-size: cover;
+}
+
+.fav-add {
+  color: #afafaf;
+}
+
+.fav-rem {
+  color: red;
+}
+
+mat-card-title a {
+  text-decoration: none;
+  color: black;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.follow-container {
+  margin-top: 20px; 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.location {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

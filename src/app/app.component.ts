@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { GitHubService } from './git-hub.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'FavoGit';
+  githubSearching: Observable<Boolean>;
+  query = '';
+
+  constructor(private gitHub: GitHubService) {
+    this.githubSearching = gitHub.searchingSubject.asObservable();
+  }
+
+  doSearch(event) {
+    this.gitHub.search(event);
+  }
 }

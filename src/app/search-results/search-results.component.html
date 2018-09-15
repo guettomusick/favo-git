@@ -1,0 +1,6 @@
+<ng-template [ngIf]="results > 0" [ngIfElse]="noResults">
+  <search-results-table [dataSource]="dataSource"></search-results-table>
+</ng-template>
+<ng-template #noResults>
+  <h3 *ngIf="!(githubSearching | async)">No se encontraron resultados</h3>
+</ng-template>

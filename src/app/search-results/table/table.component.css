@@ -1,0 +1,19 @@
+table {
+  width: 100%;
+}
+
+.fav-add {
+  color: #afafaf;
+}
+
+.fav-rem {
+  color: red;
+}
+
+.mat-row {
+  cursor: pointer;
+}
+
+.mat-row:hover{
+  background: #BBB; /* green */
+}

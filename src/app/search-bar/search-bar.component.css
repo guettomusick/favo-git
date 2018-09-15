@@ -1,0 +1,16 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.search-bar { 
+  background-color: #222; 
+}
+.search-bar * { 
+  color: white !important; 
+}
+.search-input {
+  flex: 1 1 auto;
+}
+.md-errors-spacer { 
+  display:none; 
+}

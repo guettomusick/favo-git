@@ -1,0 +1,19 @@
+table {
+  width: 100%;
+}
+
+.fav-rem {
+  color: red;
+}
+
+.mat-row {
+  cursor: pointer;
+}
+
+.mat-row:hover{
+  background: #BBB; /* green */
+}
+
+h3 {
+  padding: 10px 50px;
+}

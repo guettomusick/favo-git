@@ -1,0 +1,38 @@
+<div *ngIf="user | async; let user">
+  <mat-card class="detail-card">
+    <mat-card-header>
+      <div mat-card-avatar class="detail-header-image" [ngStyle]="{'background-image': 'url(' + user.avatar_url +')'}"></div>
+      <mat-card-title><a [href]="user.html_url"> {{ user.name }} </a></mat-card-title>
+      <mat-card-subtitle> {{ user.login }} &lt;{{ user.email }}&gt;</mat-card-subtitle>
+
+      <span class="spacer"></span>
+
+      <ng-template [ngIf]="isFavorite(user)" [ngIfElse]="notFavorite">
+        <button mat-button class="mat-icon-button favorite-button" (click)="removeFavorite(user)" clickStopPropagation>
+          <mat-icon class="icon fav-rem">favorite</mat-icon> 
+        </button>
+      </ng-template>
+        
+      <ng-template #notFavorite>
+        <button mat-button class="mat-icon-button favorite-button" (click)="addFavorite(user)" clickStopPropagation>
+          <mat-icon class="icon fav-add">favorite</mat-icon> 
+        </button>
+      </ng-template>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="user.bio">
+        <h3>Bio</h3>
+        <p> {{ user.bio }} </p>
+      </div>
+
+      <h3>Repos</h3>
+      <repos-table [repos]="getRepos(user)"></repos-table>
+      
+      <div class="follow-container">
+        <h4>Followers {{user.followers}}</h4>
+        <h4>Following {{user.following}}</h4>
+      </div>
+      <a [href]="locationUrl(user)" class="location"><mat-icon>location_on</mat-icon> {{ user.location }}</a>
+    </mat-card-content>
+  </mat-card>
+</div>

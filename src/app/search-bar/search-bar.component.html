@@ -1,0 +1,37 @@
+<mat-toolbar color="primary" *ngIf="!showSearchBar">
+  <span>Usuarios GitHub</span>
+
+  <span class="spacer"></span>
+  <span>{{ title }}</span>
+  <span class="spacer"></span>
+  
+  <button mat-button (click)="doShowSearchBar()">
+    <mat-icon>search</mat-icon>
+    <span>Buscar</span>
+  </button>
+  <button mat-button class="mat-icon-button" [routerLink]="['results']" *ngIf="actualRoute != 'results'">
+    <mat-icon class="icon">list</mat-icon>
+  </button>
+  <button mat-button class="mat-icon-button" [routerLink]="['favorites']" *ngIf="actualRoute != 'favorites'">
+    <mat-icon class="icon">favorite</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-toolbar color="primary" *ngIf="showSearchBar" class="search-bar">
+  <button mat-button class="mat-icon-button" ng-click="ctrl.submit()">
+    <mat-icon>search</mat-icon>
+  </button>
+
+  <!-- Input Text -->
+  <mat-form-field class="search-input" floatLabel="never">
+    <input matInput #searchInputBox type="text" [(ngModel)]="query" placeholder="Buscar" (keydown)="onKeydown($event)" [focus]="true">
+  </mat-form-field>
+    
+    <!-- <label for="search">Search</label> -->
+    <!-- <input id="search-input" type="text" ng-model="search" /> -->
+  <!-- </mat-input-container> -->
+
+  <button mat-button class="mat-icon-button" (click)="doHideSearchBar()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
