@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { filter, map, mergeMap } from 'rxjs/operators';
@@ -8,18 +8,19 @@ import { filter, map, mergeMap } from 'rxjs/operators';
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css']
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, OnDestroy {
   showSearchBar = false;
   title = '';
   query = '';
   actualRoute: string;
+  sub: any;
 
   @Output() doSearch = new EventEmitter();
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title) { }
 
   ngOnInit() {
-    this.router.events
+    this.sub = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .pipe(map(() => this.activatedRoute))
       .pipe(map((route) => {
@@ -35,6 +36,10 @@ export class SearchBarComponent implements OnInit {
         this.title = event['title'];
         this.titleService.setTitle(event['title']);
       });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   doShowSearchBar() {

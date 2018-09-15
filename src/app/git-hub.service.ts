@@ -38,6 +38,8 @@ export interface Repo {
   created_at: string;
 }
 
+const accessToken = null;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -67,8 +69,11 @@ export class GitHubService {
     let params = new HttpParams()
       .set('q', `${query} in:fullname in:login`)
       .set('per_page', '20')
-      .set('page', page.toString())
-      .set('access_token', '39f8f5b9f27ac75ee915d467a565b10d1a1a0f5e');
+      .set('page', page.toString());
+
+    if (accessToken) {
+      params = params.set('access_token', accessToken);
+    }
 
     if (sort && sort.match(/followers|repositories|joined/)) {
       params = params.set('sort', sort);
@@ -84,7 +89,6 @@ export class GitHubService {
 
     this.http.get<UserSearch>(this.gihubUrl + '/search/users', { params })
       .pipe(flatMap((result: UserSearch) => {
-        console.log(result);
         if (result.total_count === 0) {
           return of([]);
         }
@@ -104,10 +108,13 @@ export class GitHubService {
   allUsers(page: number = 0) {
     this.searchingSubject.next(true);
 
-    const params = new HttpParams()
+    let params = new HttpParams()
         .set('per_page', '20')
-        .set('page', page.toString())
-        .set('access_token', '39f8f5b9f27ac75ee915d467a565b10d1a1a0f5e');
+        .set('page', page.toString());
+
+    if (accessToken) {
+      params = params.set('access_token', accessToken);
+    }
 
     this.http.get<User[]>(this.gihubUrl + '/users', {params})
       .pipe(flatMap((results: User[]) => {
@@ -126,13 +133,21 @@ export class GitHubService {
   }
 
   getUser(username: string) {
-    const params = new HttpParams()
-      .set('access_token', '39f8f5b9f27ac75ee915d467a565b10d1a1a0f5e');
+    let params;
+
+    if (accessToken) {
+      params = new HttpParams().set('access_token', accessToken);
+    }
 
     return this.http.get<User>(this.githubUsersUrl + username, { params });
   }
 
   getRepos(user: User) {
-    return this.http.get<Repo[]>(user.repos_url);
+    let params;
+
+    if (accessToken) {
+      params = new HttpParams().set('access_token', accessToken);
+    }
+    return this.http.get<Repo[]>(user.repos_url, { params });
   }
 }
